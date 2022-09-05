@@ -57,11 +57,14 @@
  ~~~c++
  //Get the Smart Plug object by using its alias name. 
  //Please note the kasaUtil.ScanDevices() need to be called.
- KASASmartPlug *testPlug = kasaUtil.GetSmartPlug("Plug Alias Name");
+ KASASmartPlug *testPlug = kasaUtil.GetSmartPlug("Kasa Device Alias Name");
  
  //Turn ON the plug
  testPlug->SetRelayState(1);
  
  //Turn OFF the plug
  testPlug->SetRelayState(0);
+ 
+ //Read the plug infomation and relay state
+ testPlug->UpdateInfo();
  ~~~
