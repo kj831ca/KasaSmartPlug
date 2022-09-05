@@ -68,3 +68,7 @@
  //Read the plug infomation and relay state
  testPlug->UpdateInfo();
  ~~~
+ 
+ # Credit
+ Thanks for the infomation from https://www.softscheck.com/en/reverse-engineering-tp-link-hs110/
+ without this, it will be impossible for me to complete this library.
