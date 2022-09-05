@@ -11,7 +11,7 @@
  https://arduinojson.org/?utm_source=meta&utm_medium=library.properties
  
  
- #Example
+ # Example
  Scan the TP Link Kasa Smart Plug devices and print out the device details.
  ~~~c++
      #include <WiFi.h>
@@ -44,11 +44,8 @@
       for (int i = 0; i < found; i++)
       {
         KASASmartPlug *p = kasaUtil.GetSmartPlugByIndex(i);
-        if (p != NULL)
-        {
-          Serial.printf("\r\n %d. %s IP: %s Relay: %d", i, p->alias, p->ip_address, p->state);
-        }
-       } 
+        Serial.printf("\r\n %d. %s IP: %s Relay: %d", i, p->alias, p->ip_address, p->state);  
+      } 
      }
      
  ~~~
