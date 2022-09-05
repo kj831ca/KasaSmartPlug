@@ -14,7 +14,7 @@
  #Example
  Scan the TP Link Kasa Smart Plug devices and print out the device details.
  ~~~
-     include <WiFi.h>
+     #include <WiFi.h>
      #include "KasaSmartPlug.h"
      
      const char *ssid = "your wifi ssid";
