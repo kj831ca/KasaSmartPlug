@@ -7,8 +7,9 @@
  So far I tested the library with TP Link Smart Plug model HS103(US) and HS200(US).
  
  # Dependencie
- This library needs ArduinoJson by Benoit Blanchon. 
+ This library uses ArduinoJson by Benoit Blanchon. 
  https://arduinojson.org/?utm_source=meta&utm_medium=library.properties
+ Please make sure you install ArduinoJson to your Arduino IDE.
  
  
  # Example
@@ -48,4 +49,19 @@
       } 
      }
      
+ ~~~
+ 
+ # Example
+ Turn on the smart plug and read feedback
+ 
+ ~~~c++
+ //Get the Smart Plug object by using its alias name. 
+ //Please note the kasaUtil.ScanDevices() need to be called.
+ KASASmartPlug *testPlug = kasaUtil.GetSmartPlug("Plug Alias Name");
+ 
+ //Turn ON the plug
+ testPlug->SetRelayState(1);
+ 
+ //Turn OFF the plug
+ testPlug->SetRelayState(0);
  ~~~
