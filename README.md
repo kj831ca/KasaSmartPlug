@@ -13,7 +13,7 @@
  
  #Example
  Scan the TP Link Kasa Smart Plug devices and print out the device details.
- ~~~
+ ~~~c++
      #include <WiFi.h>
      #include "KasaSmartPlug.h"
      
