@@ -7,7 +7,7 @@
  So far I tested the library with TP Link Smart Plug model HS103(US) and HS200(US).
  
  # Dependencie
- This library uses ArduinoJson by Benoit Blanchon. 
+ This library requires ArduinoJson by Benoit Blanchon. 
  https://arduinojson.org/?utm_source=meta&utm_medium=library.properties
  Please make sure you install ArduinoJson to your Arduino IDE.
  
