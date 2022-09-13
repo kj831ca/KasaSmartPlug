@@ -1,0 +1,6 @@
+{
+    "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none",
+    "board": "esp32:esp32:esp32wrover",
+    "port": "COM4",
+    "sketch": "KasaSmartPlug.ino"
+}

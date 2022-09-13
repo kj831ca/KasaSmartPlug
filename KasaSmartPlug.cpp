@@ -429,6 +429,7 @@ int KASASmartPlug::UpdateInfo()
             JsonObject get_sysinfo = doc["system"]["get_sysinfo"];
             state = get_sysinfo["relay_state"];
             err_code = get_sysinfo["err_code"];
+            strcpy(alias,get_sysinfo["alias"]);
             Serial.printf("\r\n Relay state: %d Error Code %d", state, err_code);
         }
         xSemaphoreGive(mutex);
