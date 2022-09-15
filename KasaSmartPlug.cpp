@@ -1,6 +1,7 @@
 // KASASmartPlug library v0.1 9/2/2022
-// I got Covid19 on 8/22/2022 and had to stayed home
-//  with the boredom I wrote this thing..
+// I got Covid 19 on 8/22/2022 and had to stay home.
+// I felt better after couple days of rest but still tested positive and
+// could not go to work. I feel bored so I started writing this library.
 
 #include "KasaSmartPlug.hpp"
 
@@ -61,7 +62,7 @@ KASAUtil::KASAUtil()
     deviceFound = 0;
 }
 
-int KASAUtil::ScanDevices()
+int KASAUtil::ScanDevices(int timeoutMs)
 {
     struct sockaddr_in dest_addr;
     int ret = 0;
@@ -137,12 +138,13 @@ int KASAUtil::ScanDevices()
     }
     Serial.println("Query Message sent");
     int send_loop = 0;
+    long time_out_us = (long)timeoutMs * 1000;
     while ((err > 0) && (send_loop < 1))
     {
 
         struct timeval tv = {
-            .tv_sec = 3,
-            .tv_usec = 0,
+            .tv_sec = 0,
+            .tv_usec = time_out_us,
         };
         fd_set rfds;
         FD_ZERO(&rfds);

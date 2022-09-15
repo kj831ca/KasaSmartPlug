@@ -123,7 +123,7 @@ public:
     static const char *relay_on;
     static const char *relay_off;
 
-    int ScanDevices();
+    int ScanDevices(int timeoutMs = 1000); //Wait at least xxx ms after received UDP packages..
     static uint16_t Encrypt(const char *data, int length, uint8_t addLengthByte, char *encryped_data);
     static uint16_t Decrypt(char *data, int length, char *decryped_data, int startIndex);
     KASASmartPlug *GetSmartPlug(const char *alias_name);
