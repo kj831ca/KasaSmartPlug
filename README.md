@@ -65,7 +65,7 @@
  testPlug->SetRelayState(0);
  
  //Read the plug infomation and relay state
- testPlug->UpdateInfo();
+ testPlug->QueryInfo();
  ~~~
  
  # Credit
