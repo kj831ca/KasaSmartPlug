@@ -71,3 +71,5 @@
  # Credit
  Thanks for the infomation from https://www.softscheck.com/en/reverse-engineering-tp-link-hs110/
  without this, it will be impossible for me to complete this library.
+ 
+ Very well written library ArduinoJson by Benoit Blanchon. https://arduinojson.org/?utm_source=meta&utm_medium=library.properties 
