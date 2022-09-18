@@ -213,7 +213,7 @@ int KASAUtil::ScanDevices(int timeoutMs)
                         relay_state = get_sysinfo["relay_state"];
                         model = get_sysinfo["model"];
 
-                        if (IsStartWith("HS103", model) || IsStartWith("HS200", model))
+                        if (IsStartWith("HS",model))
                         {
                             // Limit the number of devices and make sure no duplicate device.
                             if (IsContainPlug(string_value) == -1)
@@ -407,7 +407,7 @@ int KASASmartPlug::Query(const char *cmd, char *buffer, int bufferLength, long t
     xSemaphoreGive(mutex);
     return recvLen;
 }
-int KASASmartPlug::UpdateInfo()
+int KASASmartPlug::QueryInfo()
 {
     char buffer[1024];
     int recvLen = Query(KASAUtil::get_kasa_info, buffer, 1024, 300000);

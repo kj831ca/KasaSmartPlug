@@ -39,11 +39,11 @@ void setup()
   {
     Serial.printf("\r\nTurn On the plug");
     testPlug->SetRelayState(1);
-    testPlug->UpdateInfo();
+    testPlug->QueryInfo();
     vTaskDelay(2000 / portTICK_PERIOD_MS);
     Serial.printf("\r\nTurn Off the plug");
     testPlug->SetRelayState(0);
-    testPlug->UpdateInfo();
+    testPlug->QueryInfo();
   }
 }
 

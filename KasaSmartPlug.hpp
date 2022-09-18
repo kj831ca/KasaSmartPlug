@@ -86,7 +86,7 @@ public:
     int state;
     int err_code;
 
-    int UpdateInfo();
+    int QueryInfo();
 
     void SetRelayState(uint8_t state);
     void UpdateIPAddress(const char *ip)
