@@ -73,3 +73,6 @@
  without this, it will be impossible for me to complete this library.
  
  Very well written library ArduinoJson by Benoit Blanchon. https://arduinojson.org/?utm_source=meta&utm_medium=library.properties 
+ 
+ # Tutorial Video
+ https://www.youtube.com/watch?v=N5J3weD0vPg&ab_channel=KRIS-%E0%B8%99%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B4%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%A2.14
