@@ -11,7 +11,7 @@
  Please make sure you install ArduinoJson to your Arduino IDE.
  
  
- # Example: Scan the TP Link Kasa Smart Plug devices and print out the device details.
+ # Example: Scan local network for TP Link Kasa Smart Plug devices and print out the device details.
  ~~~c++
      #include <WiFi.h>
      #include "KasaSmartPlug.h"
