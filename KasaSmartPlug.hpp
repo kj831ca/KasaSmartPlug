@@ -48,26 +48,52 @@ protected:
     /*
         @brief Open the TCP Client socket
     */
-    void OpenSock()
+    bool OpenSock()
     {
         int err;
         sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
+        
+        fd_set fdset;
+        struct timeval tv;
+        int arg;
+        
         if(sock<0)
         {
             Serial.println("Error unable to open socket...");
+            return false;
         }
+
+        // Using non blocking connect
+        arg = fcntl(sock, F_GETFL, NULL);
+        arg |= O_NONBLOCK;
+
+        fcntl(sock, F_SETFL, arg);
+        
         err = connect(sock,(struct sockaddr *)&dest_addr, sizeof(dest_addr));
-        if(err != 0)
+        
+        // Set connect timeout to 1 sec.
+        if (select(sock + 1, NULL, &fdset, NULL, &tv) == 1)
         {
-            Serial.println("Error unable to connect tcp socket");
+            int so_error = 0;
+            socklen_t len = sizeof so_error;
+
+            getsockopt(sock, SOL_SOCKET, SO_ERROR, &so_error, &len);
+            if (so_error == 0)
+            {
+                arg &= (~O_NONBLOCK);
+                fcntl(sock, F_SETFL, arg);
+                return true;
+            }
         }
+        CloseSock();
+
+        return false;
 
     }
     void CloseSock()
     {
         if (sock != -1)
         {
-            ESP_LOGE(TAG, "Shutting down socket and restarting...");
             shutdown(sock, 0);
             close(sock);
             sock = -1;
