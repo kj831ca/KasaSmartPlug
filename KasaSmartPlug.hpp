@@ -12,15 +12,15 @@ Credit:
 Thanks to the below infomation link.
 https://www.softscheck.com/en/reverse-engineering-tp-link-hs110/
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU 
-General Public License as published by the Free Software Foundation, either version 3 of the License, 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation, either version 3 of the License,
 or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program. 
+You should have received a copy of the GNU General Public License along with this program.
 If not, see <https://www.gnu.org/licenses/>.
 */
 #ifndef KASA_SMART_PLUG_DOT_HPP
@@ -52,7 +52,7 @@ protected:
     {
         int err;
         sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
-        
+
         fd_set fdset;
         struct timeval tv;
         int arg;
@@ -67,24 +67,43 @@ protected:
         arg = fcntl(sock, F_GETFL, NULL);
         arg |= O_NONBLOCK;
 
-        fcntl(sock, F_SETFL, arg);
-        
-        err = connect(sock,(struct sockaddr *)&dest_addr, sizeof(dest_addr));
-        
-        // Set connect timeout to 1 sec.
-        if (select(sock + 1, NULL, &fdset, NULL, &tv) == 1)
-        {
-            int so_error = 0;
-            socklen_t len = sizeof so_error;
+        fcntl(sock, F_SETFL, O_NONBLOCK);
 
-            getsockopt(sock, SOL_SOCKET, SO_ERROR, &so_error, &len);
-            if (so_error == 0)
+        err = connect(sock, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+        if (err < 0)
+        {
+            do
             {
-                arg &= (~O_NONBLOCK);
-                fcntl(sock, F_SETFL, arg);
-                return true;
-            }
+                tv.tv_sec = 1;
+                tv.tv_usec = 0;
+                FD_ZERO(&fdset);
+                FD_SET(sock,&fdset);
+
+                // Set connect timeout to 1 sec.
+                err = select(sock + 1, NULL, &fdset, NULL, &tv);
+                if(err < 0 && errno != EINTR)
+                {
+                    Serial.println("Unable to open sock");
+                    break;
+                }
+                
+                if (err == 1)
+                {
+                    int so_error = 0;
+                    socklen_t len = sizeof so_error;
+
+                    getsockopt(sock, SOL_SOCKET, SO_ERROR, &so_error, &len);
+                    if (so_error == 0)
+                    {
+                        // arg &= (~O_NONBLOCK);
+                        fcntl(sock, F_SETFL, arg);
+                        return true;
+                    } else 
+                    break;
+                }
+            } while(1);
         }
+        Serial.println("Error can not open sock...");
         CloseSock();
 
         return false;
@@ -99,11 +118,9 @@ protected:
             sock = -1;
         }
     }
-    void DebugBufferPrint(char * data, int length);
-    void SendCommand(const char* cmd);
-    int Query(const char* cmd,char * buffer, int bufferLength,long timeout);
-    
-
+    void DebugBufferPrint(char *data, int length);
+    void SendCommand(const char *cmd);
+    int Query(const char *cmd, char *buffer, int bufferLength, long timeout);
 
 public:
     char alias[32];
@@ -149,7 +166,7 @@ public:
     static const char *relay_on;
     static const char *relay_off;
 
-    int ScanDevices(int timeoutMs = 1000); //Wait at least xxx ms after received UDP packages..
+    int ScanDevices(int timeoutMs = 1000); // Wait at least xxx ms after received UDP packages..
     static uint16_t Encrypt(const char *data, int length, uint8_t addLengthByte, char *encryped_data);
     static uint16_t Decrypt(char *data, int length, char *decryped_data, int startIndex);
     KASASmartPlug *GetSmartPlug(const char *alias_name);
